@@ -1,0 +1,15 @@
+[project]
+name = "translate-dir-cli"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "typer>=0.16.0",
+]
+
+[project.scripts]
+translate-dir = "cli:app"
+
+[tool.setuptools]
+py-modules = ["cli"]
