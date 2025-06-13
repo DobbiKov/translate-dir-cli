@@ -9,6 +9,18 @@ documents written using Markup languages such as:
 
 This CLI tool is an implementation of [this library](https://github.com/DobbiKov/translate-dir-lib).
 
+## Table of Contents
+- [Features](#features)
+- [Getting started](#getting-started)
+    - [Installation](#installation)
+    - [First steps](#first-steps)
+        - [Setup the translation project](#setup-the-translation-project)
+        - [Syncing and Translation](#syncing-and-translation)
+        - [Correction](#correction)
+- [Getting started for developers](#getting-started-for-developers)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+
 ## Features
 - [x] Project creation
 - [x] Source language and the source folder to translate setting
