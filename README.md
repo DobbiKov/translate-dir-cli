@@ -31,7 +31,7 @@ For developers: follow [here](#getting-started-for-developers)
 
 ### First steps
 This section is to start using this tool as quickly as possible, the profound
-explanation can be found [here](./docs/tool-profound-explanation.md). It is
+explanation can be found [here](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md). It is
 very recommended to read the profound explanation in order to understand how 
 the tool operates with files and how the overall structure of the project look
 like.
@@ -104,6 +104,27 @@ GOOGLE_API_KEY=<your_google_api_key> translate-dir project translate all <target
 Example:
 ```
 GOOGLE_API_KEY=my_super_google_key translate-dir project translate all english 
+```
+##### Vocabulary
+To each translation command a `--vocabulary` flag can be passed. That flag
+requires a path to a CSV file that contains a translation vocabulary. Such
+file must contain a table where each column is dedicated to one particular
+language, then in the row, there's a term in a language and the other fields
+of the row contain the translation of that term on the language depending the
+column they located in. This vocabulary then is passed to the translation
+tool in order to improve the translation quality.
+
+Example:
+Let's assume you have a file in the project's root directory that is called `vocab.csv` that has such contents:
+```
+English,French,Ukrainian
+iff,ssi,якщо і тільки якщо
+eigen vector, vecteur propre, айген вектор
+```
+
+Then, in order to use it in the translation from French to English:
+```
+GOOGLE_API_KEY=my_super_google_key translate-dir project translate all english --vocabulary vocab.csv
 ```
 
 #### Correction
