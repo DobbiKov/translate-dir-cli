@@ -84,7 +84,7 @@ To see all the translatable files use: `translate-dir project list-translatable`
 translate-dir project sync
 ```
 
-Why and how does it work? Visit [profound explanation](./docs/tool-profound-explanation.md)
+Why and how does it work? Visit [profound explanation](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md)
 
 7. Translate one particular file:
 ```
