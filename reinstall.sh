@@ -1,3 +1,3 @@
 #!/bin/sh
-uv tool uninstall translate-dir-cli -y
+uv tool uninstall translate-dir-cli 
 uv tool install -e .
