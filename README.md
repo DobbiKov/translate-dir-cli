@@ -98,6 +98,8 @@ translate-dir project sync
 
 Why and how does it work? Visit [profound explanation](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md)
 
+For the translation you need to have a `GOOGLE_API_KEY`, that you can obtain by following [this link](https://aistudio.google.com/app/apikey)
+
 7. Translate one particular file:
 ```
 GOOGLE_API_KEY=<your_google_api_key> translate-dir project translate file <file_path> <target_language>
