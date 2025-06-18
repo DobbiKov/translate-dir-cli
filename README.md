@@ -35,10 +35,23 @@ For developers: follow [here](#getting-started-for-developers)
 
 ### Installation
 1. Ensure you have [uv](https://docs.astral.sh/uv/#__tabbed_1_1) tool installed. 
-2. Clone this repo: `git clone https://github.com/DobbiKov/translate-dir-cli`
-3. Enter to the directory: `cd translate-dir-cli`
-4. Install dependencies: `uv sync`
-5. Install the CLI globally on your machine: `uv tool install .`
+2. Clone this repo: 
+    ```sh
+    git clone https://github.com/DobbiKov/translate-dir-cli
+    ```
+3. Enter to the directory: 
+    ```sh
+    cd translate-dir-cli
+    ```
+4. Install dependencies: 
+    ```sh
+    uv sync
+    ```
+
+5. Install the CLI globally on your machine: 
+    ```sh
+    uv tool install .
+    ```
 6. Use it using `translate-dir` (example: `translate-dir --help`)
 
 ### First steps
@@ -159,12 +172,27 @@ GOOGLE_API_KEY=my_super_google_key translate-dir project translate all english -
 1. Ensure you have [uv](https://docs.astral.sh/uv/#__tabbed_1_1) tool installed. 
 2. Clone the library firstly, the lib's installation guide can be found [here](https://github.com/DobbiKov/translate-dir-lib?tab=readme-ov-file#installation)
 3. Get the path to the lib's directory on your local machine (for instance: `realpath <your_dir>` on macOs)
-4. Clone this repo: `git clone https://github.com/DobbiKov/translate-dir-cli`
-5. Enter to the directory: `cd translate-dir-cli`
-6. Remove current library dependency: `uv remove translate-dir-lib`
+4. Clone this repo: 
+    ```sh
+    git clone https://github.com/DobbiKov/translate-dir-cli
+    ```
+5. Enter to the directory: 
+    ```sh
+    cd translate-dir-cli
+    ```
+6. Remove current library dependency: 
+    ```sh
+    uv remove translate-dir-lib
+    ```
 7. Add the local one: `uv add --editable <path_to_local_lib_dir>`
-8. Install the dependencies: `uv sync`
-9. Install the CLI globally in editable mode: `uv pip install -e .`
+8. Install the dependencies: 
+    ```sh
+    uv sync
+    ```
+9. Install the CLI globally in editable mode: 
+    ```sh
+    uv pip install -e .
+    ```
 
 ## Documentation
 The documentation for the library can be found [here](./docs/main.md)
