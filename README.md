@@ -42,7 +42,7 @@ For developers: follow [here](#getting-started-for-developers)
 6. Use it using `translate-dir` (example: `translate-dir --help`)
 
 ### First steps
-This section is to start using this tool as quickly as possible, the profound
+This section is a guide to start using this tool as quickly as possible, the profound
 explanation can be found [here](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md). It is
 very recommended to read the profound explanation in order to understand how 
 the tool operates with files and how the overall structure of the project look
@@ -96,9 +96,10 @@ To see all the translatable files use: `translate-dir project list-translatable`
 translate-dir project sync
 ```
 
-Why and how does it work? Visit [profound explanation](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md)
+Why and how does it work? Visit the [profound explanation](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md)
 
-For the translation you need to have a `GOOGLE_API_KEY`, that you can obtain by following [this link](https://aistudio.google.com/app/apikey)
+For the translation you need to have a `GOOGLE_API_KEY`, that you can obtain by following [this link](https://aistudio.google.com/app/apikey) the key must be set as a environment variable.
+This can be done by providing it in the start of your CLI command as it is shown below:
 
 7. Translate one particular file:
 ```
