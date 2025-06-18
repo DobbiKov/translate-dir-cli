@@ -113,13 +113,14 @@ def sync_files(ctx: typer.Context):
 @app.command("add")
 def mark_translatable(
     ctx: typer.Context,
-    file_path: Annotated[str, typer.Argument(help="Path to the file (relative to project root or absolute).")]
+    file_paths: Annotated[list[str], typer.Argument(help="Path to the file (relative to project root or absolute).")]
 ):
     """Marks a file in the source directory as translatable."""
     project = get_project_from_context(ctx)
     try:
-        project.set_file_translatability(file_path, True)
-        typer.secho(f"File '{file_path}' marked as translatable.", fg=typer.colors.GREEN)
+        for file_path in file_paths:
+            project.set_file_translatability(file_path, True)
+            typer.secho(f"File '{file_path}' marked as translatable.", fg=typer.colors.GREEN)
     except errors.AddTranslatableFileError as e:
         typer.secho(f"Error marking file as translatable: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
@@ -127,13 +128,14 @@ def mark_translatable(
 @app.command("remove")
 def mark_untranslatable(
     ctx: typer.Context,
-    file_path: Annotated[str, typer.Argument(help="Path to the file (relative to project root or absolute).")]
+    file_paths: Annotated[list[str], typer.Argument(help="Path to the file (relative to project root or absolute).")]
 ):
     """Marks a file in the source directory as untranslatable."""
     project = get_project_from_context(ctx)
     try:
-        project.set_file_translatability(file_path, False)
-        typer.secho(f"File '{file_path}' marked as untranslatable.", fg=typer.colors.GREEN)
+        for file_path in file_paths:
+            project.set_file_translatability(file_path, False)
+            typer.secho(f"File '{file_path}' marked as untranslatable.", fg=typer.colors.GREEN)
     except errors.AddTranslatableFileError as e:
         typer.secho(f"Error marking file as untranslatable: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
