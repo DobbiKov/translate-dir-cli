@@ -55,12 +55,8 @@ def init(
         typer.secho(f"Error initializing project: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-# --- Project State Commands (require loaded project) ---
-project_app = typer.Typer(name="project", help="Manage an existing project (run from within a project directory).", no_args_is_help=True)
-app.add_typer(project_app)
 
-
-@project_app.command("set-source")
+@app.command("set-source")
 def set_source_dir(
     ctx: typer.Context, # For getting loaded project
     dir_name: Annotated[str, typer.Argument(help="Name of the source directory (relative to project root).")],
@@ -75,7 +71,7 @@ def set_source_dir(
         typer.secho(f"Error setting source directory: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@project_app.command("add-lang")
+@app.command("set-target")
 def add_language(
     ctx: typer.Context,
     lang: Annotated[Language, typer.Argument(help="Target language to add.", case_sensitive=False)]
@@ -89,7 +85,7 @@ def add_language(
         typer.secho(f"Error adding language: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@project_app.command("remove-lang")
+@app.command("remove-lang")
 def remove_language(
     ctx: typer.Context,
     lang: Annotated[Language, typer.Argument(help="Target language to remove.", case_sensitive=False)]
@@ -103,7 +99,7 @@ def remove_language(
         typer.secho(f"Error removing language: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@project_app.command("sync")
+@app.command("sync")
 def sync_files(ctx: typer.Context):
     """Synchronizes untranslatable files from the source to all target directories."""
     project = get_project_from_context(ctx)
@@ -114,7 +110,7 @@ def sync_files(ctx: typer.Context):
         typer.secho(f"Error synchronizing files: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@project_app.command("mark-translatable")
+@app.command("add")
 def mark_translatable(
     ctx: typer.Context,
     file_path: Annotated[str, typer.Argument(help="Path to the file (relative to project root or absolute).")]
@@ -128,7 +124,7 @@ def mark_translatable(
         typer.secho(f"Error marking file as translatable: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@project_app.command("mark-untranslatable")
+@app.command("remove")
 def mark_untranslatable(
     ctx: typer.Context,
     file_path: Annotated[str, typer.Argument(help="Path to the file (relative to project root or absolute).")]
@@ -142,7 +138,7 @@ def mark_untranslatable(
         typer.secho(f"Error marking file as untranslatable: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@project_app.command("list-translatable")
+@app.command("list")
 def list_translatable_files(ctx: typer.Context):
     """Lists all files marked as translatable in the source directory."""
     project = get_project_from_context(ctx)
@@ -163,7 +159,7 @@ def list_translatable_files(ctx: typer.Context):
         typer.secho(f"Error listing translatable files: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@project_app.command("update")
+@app.command("update")
 def update_project_structure(ctx: typer.Context):
     """
     Updates the config structure of the source directory (call it when you made changes in your source directory)
@@ -174,7 +170,7 @@ def update_project_structure(ctx: typer.Context):
     except errors.NoSourceDirError:
         print("The source directory is not set")
 
-@project_app.command("info")
+@app.command("info")
 def info_on_project(ctx: typer.Context):
     """
     Provides an info about the project
@@ -205,8 +201,8 @@ def info_on_project(ctx: typer.Context):
 
 
 # --- Translation Commands ---
-translate_app = typer.Typer(name="translate", help="Translate files.", no_args_is_help=True)
-project_app.add_typer(translate_app) # Sub-command of project
+translate_app = typer.Typer(name="translate", help="Translate files", no_args_is_help=True)
+app.add_typer(translate_app) # Sub-command of project
 
 def _read_vocab_from_file(path: Path) -> list[dict]:
     with open(path, "r") as f:
@@ -267,8 +263,8 @@ def translate_all_cli(
 
 
 # ============ correct app =============
-correct_app = typer.Typer(name="correct", help="Correct translation.", no_args_is_help=True)
-project_app.add_typer(correct_app) # Sub-command of project
+correct_app = typer.Typer(name="correct", help="Correct translation", no_args_is_help=True)
+app.add_typer(correct_app) # Sub-command of project
 
 @correct_app.command("file")
 def correct_file_cli(
