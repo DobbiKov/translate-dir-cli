@@ -62,7 +62,7 @@ the tool operates with files and how the overall structure of the project look
 like.
 
 #### Setup the translation project
-1. Create a dedicated directory where you will store your project **OR** move to the parent directory of the root of your project.
+1. Create a dedicated directory to serve as the root for your translation project, and place your existing writing project's directory inside it. In other words, your root directory (for the translation project) must be a parent direcotry for your writing project.
 2. Create the dedicated translation project:
 ```
 translate-dir init
