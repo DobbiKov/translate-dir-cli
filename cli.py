@@ -74,12 +74,13 @@ def set_source_dir(
 @app.command("set-target")
 def add_language(
     ctx: typer.Context,
-    lang: Annotated[Language, typer.Argument(help="Target language to add.", case_sensitive=False)]
+    lang: Annotated[Language, typer.Argument(help="Target language to add.", case_sensitive=False)],
+    tgt_dir: Annotated[Path, typer.Option(help="Set particular directory.", case_sensitive=False)]
 ):
     """Adds a new target language to the project."""
     project = get_project_from_context(ctx)
     try:
-        new_path = project.add_target_language(lang)
+        new_path = project.add_target_language(lang, tgt_dir)
         typer.secho(f"Target language {lang.value} added. Directory created at {new_path}", fg=typer.colors.GREEN)
     except errors.AddLanguageError as e:
         typer.secho(f"Error adding language: {e}", fg=typer.colors.RED, err=True)
