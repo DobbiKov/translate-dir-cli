@@ -1,0 +1,19 @@
+name: Verify lib package
+on:
+  pull_request:
+    branches:
+    - main
+jobs:
+  verify:
+    name: pyproject.toml verification
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Git repository
+      uses: actions/checkout@v3
+    - name: Look at pyproject.toml
+      run: |
+        if ! grep -F 'translate-dir-lib = { git = "https://github.com/DobbiKov/translate-dir-lib" }' pyproject.toml | grep -vq '^\s*#'; then
+          echo "translate-dir-lib dependency not found or is commented out!" >&2
+          exit 1
+        fi
+    
