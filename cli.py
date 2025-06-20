@@ -146,7 +146,7 @@ def list_translatable_files(ctx: typer.Context):
     """Lists all files marked as translatable in the source directory."""
     project = get_project_from_context(ctx)
     try:
-        files = project.get_translatable_file_pathes()
+        files = project.get_translatable_files()
         if not files:
             typer.secho("No translatable files found.", fg=typer.colors.YELLOW)
             return
@@ -162,17 +162,6 @@ def list_translatable_files(ctx: typer.Context):
         typer.secho(f"Error listing translatable files: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@app.command("update")
-def update_project_structure(ctx: typer.Context):
-    """
-    Updates the config structure of the source directory (call it when you made changes in your source directory)
-    """
-    project = get_project_from_context(ctx)
-    try:
-        project.update_project_structure()
-    except errors.NoSourceDirError:
-        print("The source directory is not set")
-
 @app.command("info")
 def info_on_project(ctx: typer.Context):
     """
@@ -187,7 +176,7 @@ def info_on_project(ctx: typer.Context):
     if src_dir is None:
         print("\tSource directory: Is not set")
     else:
-        src_dir_name = src_dir.get_dir().get_dir_name()
+        src_dir_name = src_dir.get_path().name
         src_dir_lang = src_dir.get_lang()
         print("\tSource language: {}".format(src_dir_lang))
         print("\tSource directory: {}".format(src_dir_name))
