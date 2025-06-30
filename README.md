@@ -194,7 +194,7 @@ GOOGLE_API_KEY=my_super_google_key translate-dir project translate all english -
     ```sh
     uv pip install -e .
     ```
-## 📚 Citation
+## Citation
 
 If you use this software in your research, please cite it as follows:
 ```bib
