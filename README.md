@@ -18,6 +18,7 @@ This CLI tool is an implementation of [this library](https://github.com/DobbiKov
         - [Syncing and Translation](#syncing-and-translation)
         - [Correction](#correction)
 - [Getting started for developers](#getting-started-for-developers)
+- [Citation](#citation)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 
@@ -193,6 +194,20 @@ GOOGLE_API_KEY=my_super_google_key translate-dir project translate all english -
     ```sh
     uv pip install -e .
     ```
+## 📚 Citation
+
+If you use this software in your research, please cite it as follows:
+```bib
+@software{korotenko-sci-trans-git,
+    author = {Yehor Korotenko},
+    title = {sci-trans-git},
+    year = {2025},
+    publisher = {GitHub},
+    version = {0.2.0-alpha},
+    url = {https://github.com/DobbiKov/sci-trans-git},
+    doi = {10.5281/zenodo.15775111}
+}
+```
 
 ## Documentation
 The documentation for the library can be found [here](./docs/main.md)
