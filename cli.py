@@ -74,12 +74,13 @@ def set_source_dir(
 @app.command("set-target")
 def add_language(
     ctx: typer.Context,
-    lang: Annotated[Language, typer.Argument(help="Target language to add.", case_sensitive=False)]
+    lang: Annotated[Language, typer.Argument(help="Target language to add.", case_sensitive=False)],
+    tgt_dir: Annotated[Path | None, typer.Option(help="Set particular directory.", case_sensitive=False)] = None
 ):
     """Adds a new target language to the project."""
     project = get_project_from_context(ctx)
     try:
-        new_path = project.add_target_language(lang)
+        new_path = project.add_target_language(lang, tgt_dir)
         typer.secho(f"Target language {lang.value} added. Directory created at {new_path}", fg=typer.colors.GREEN)
     except errors.AddLanguageError as e:
         typer.secho(f"Error adding language: {e}", fg=typer.colors.RED, err=True)
@@ -145,7 +146,7 @@ def list_translatable_files(ctx: typer.Context):
     """Lists all files marked as translatable in the source directory."""
     project = get_project_from_context(ctx)
     try:
-        files = project.get_translatable_file_pathes()
+        files = project.get_translatable_files()
         if not files:
             typer.secho("No translatable files found.", fg=typer.colors.YELLOW)
             return
@@ -161,17 +162,6 @@ def list_translatable_files(ctx: typer.Context):
         typer.secho(f"Error listing translatable files: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@app.command("update")
-def update_project_structure(ctx: typer.Context):
-    """
-    Updates the config structure of the source directory (call it when you made changes in your source directory)
-    """
-    project = get_project_from_context(ctx)
-    try:
-        project.update_project_structure()
-    except errors.NoSourceDirError:
-        print("The source directory is not set")
-
 @app.command("info")
 def info_on_project(ctx: typer.Context):
     """
@@ -186,7 +176,7 @@ def info_on_project(ctx: typer.Context):
     if src_dir is None:
         print("\tSource directory: Is not set")
     else:
-        src_dir_name = src_dir.get_dir().get_dir_name()
+        src_dir_name = src_dir.get_path().name
         src_dir_lang = src_dir.get_lang()
         print("\tSource language: {}".format(src_dir_lang))
         print("\tSource directory: {}".format(src_dir_name))
@@ -301,6 +291,111 @@ def correct_all_cli(
     except Exception as e:
         typer.secho(f"An unexpected error occurred during 'correct all': {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
+
+### DEBUG!
+@app.command("diff")
+def info_on_project(ctx: typer.Context):
+    """
+    Provides an info about the project
+    """
+    project = get_project_from_context(ctx)
+    txt = "Soit $E$ un espace vectoriel normé"
+    txt = r'''
+\begin{preuve}
+    $E = \mathcal{C}([a, b], \R)$ et $\|f\|_1 = \int_{{a}}^{{b}} {|f(x)|} \: d{x}$ norme sur $\mathcal{C}([a, b], \R)$. Je fixe $m \in \mathcal{C}([a, b], \R)$ et $A: f \to mf$. $Af(x) = m(x)f(x)$. 
+    \begin{itemize}
+        \item $A \in L(E)$ évident
+        \item $A \in B(E)$?
+    \end{itemize}
+    Trouver $c \ge 0$ telle que 
+    \[
+    \|Af\|_{1} \le c \|f\|_1 \quad \forall f \in E
+    \] 
+    \begin{align*}
+        \|Af\|_1 = \int_{{a}}^{{b}} {|m(x)f(x)|} \: d{x}
+    \end{align*}
+    \begin{align*}
+        |m(x)f(x)| \le |m(x)| |f(x)| \le \|m\|_{\infty} |f(x)|
+    \end{align*}
+    \[
+        \|m\|_{\infty} = \sup_{x \in [a, b]}|m(x)|
+    \] 
+    \begin{align*}
+        \int_{{a}}^{{b}} {|m(x)f(x)|} \: d{x} \le \|m\|_{\infty}\int_{{a}}^{{b}} {|f(x)|} \: d{x} = \|m\|_{\infty}\|f\|_1
+    \end{align*}
+    \[
+    c = \|m\|_{\infty}
+    \] 
+    On a: $A \in B(E)$ et $\|A\| \le \|m\|_{\infty}$. Montrons que $\|A\| = \|m\|_{\infty}$
+    \[
+        \|A\| = \sup_{\|f\|_1 \le 1} \|Af\|_{1} \overset{?}{=} \|m\|_{\infty} = \sup I \text{ avec } I = \{ \|Af\|_{1} : \|f\|_{1} \le 1 \}
+    \] 
+    Notons $\alpha = \sup I$
+     \begin{enumerate}
+        \item $\alpha$ majorant de  $I$
+        \item  $\exists (a_n) \, a_n \in I$ avec $a_n \xrightarrow[n \to \infty]{} \alpha$
+    \end{enumerate}
+    Dans notre cas:
+    \begin{itemize}
+        \item But: trouver une suite $f_n \in E$ $\|f_n\|_1 \le 1$ et $\|Af_n\|_{1} \to \|m\|_{\infty}$
+    \end{itemize}
+    $a_n = \|Af_n\|_{1}$ $\|m\|_{\infty} = \sup$ de la fonction $|m|$ sur  $[a, b]$.
+     \begin{itemize}
+         \item $|m|$ continue:  $\exists x_0 \in [a, b]$ tel que $\|m\|_{\infty} = |m|(x_0)$
+    \end{itemize}
+    \[
+    |m|(x) = |m(x)|
+    \] 
+\begin{figure}[H]
+    \centering
+    \incfig{preuve-prop-line-cont-borne}
+    \caption{$f_n$}
+    \label{fig:preuve-prop-line-cont-borne}
+\end{figure}
+\[
+|m(x)f_n(x)| = |Af(x)| \text{ proche de } |m(x_0)| |f_n(x)|
+\] 
+$\|f_n\|_{1} = 1$ si $c_n \le 2n$
+\[
+f_n(x) = \begin{cases}
+    0 \text{ si } a \le x \le x_0 - \frac{1}{2n}\\
+    2n(1 - n|x - x_0|) \text{ si } |x - x_0| \le \frac{1}{2n}\\
+    0 \text{ si } x_0 + \frac{1}{2n} \le x \le b
+\end{cases}
+\] 
+\begin{figure}[H]
+    \centering
+    \incfig{preuve-lin-cont-bornee-2}
+    \caption{$f_n$}
+    \label{fig:preuve-lin-cont-bornee-2}
+\end{figure}
+\[
+|m(x)f_n(x) - m(x_0)f_n(x)| \le |m(x) - m(x_0)| |f_n(x)| \le \varepsilon_n|f_n(x)|
+\] 
+Là où $f_n(x) \neq 0$ $|x - x_0| \le \frac{1}{n}$ donc 
+\[
+|m(x) - m(x_0)| \le \varepsilon_n \quad \varepsilon_n \xrightarrow[n \to \infty]{} 0
+\] 
+alors $m$ continue en  $x_0$.
+ \begin{align*}
+    \|Af_n\|_{1} = \int_{{a}}^{{b}} {|m(x)f_n(x)|} \: d{x} \le \int_{{a}}^{{b}} {|m(x) - m(x_0)| |f_n(x)|} \: d{x} + \int_{{a}}^{{b}} {|m(x_0)| |f_n(x)|} \: d{x} 
+\end{align*}
+\begin{itemize}
+    \item $1^{er}$ terme: $\le \varepsilon_n\|f_n\|_{1} = \varepsilon_n$
+    \item $2^{eme}$ terme: $:= \|m\|_{\infty}\|f_n\|_{1} = \|m\|_{\infty}$
+\end{itemize}
+Alors:
+\begin{align*}
+    &\|f_n\|_{1} = 1\\
+    &\|Af_n\|_{1} \to \|m\|_{\infty}\\
+    &\text{donc } \|A\| = \|m\|_{\infty}
+\end{align*}
+\end{preuve}
+    '''
+    lang = Language.FRENCH
+    txt, score = project.diff(txt, lang)
+    print(f"Score: {score}")
+    print(f"Txt:\n{txt}")
 
 
 # --- Main execution for CLI ---

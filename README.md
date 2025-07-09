@@ -89,40 +89,48 @@ translate-dir init --name my_proj
 ```
 3. Set the source directory (that will be translated) if such exists, if it doesn't, create one or move one:
 ```
-translate-dir project set-source <dir_name> <language>
+translate-dir set-source <dir_name> <language>
 ```
 
 Example:
 ```
-translate-dir project set-source analysis_notes french
+translate-dir set-source analysis_notes french
 ```
 
 4. Add target language(s) that you want to translate your project into:
 ```
-translate-dir project add-lang <language>
+translate-dir set-target <language> --tgt-dir [YOUR_TARGET_DIRCTORY]
 ```
+
+The `--tgt-dir` is an optional flag, if the target directory is not provided,
+then the APP will create a new one.
 
 Example:
 ```
-translate-dir project add-lang english
+translate-dir set-target english 
+```
+
+or:
+```
+translate-dir set-target english --tgt-dir translations/en
 ```
 
 #### Syncing and Translation 
 5. Mark the files in the source directory that you want to translate:
 ```
-translate-dir project mark-translatable <path_to_file>
+translate-dir add <path_to_file>
 ```
 
 Example:
 ```
-translate-dir project mark-translatable analysis_notes/main.tex
+translate-dir add analysis_notes/main.tex
 ```
 
-To see all the translatable files use: `translate-dir project list-translatable`
+To see all the translatable files use: `translate-dir list-translatable`
 
 6. Synchronize the source directory and target language directories (untranslatable files only)
 ```
-translate-dir project sync
+translate-dir sync
 ```
 
 Why and how does it work? Visit the [profound explanation](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md)
@@ -132,22 +140,22 @@ This can be done by providing it in the start of your CLI command as it is shown
 
 7. Translate one particular file:
 ```
-GOOGLE_API_KEY=<your_google_api_key> translate-dir project translate file <file_path> <target_language>
+GOOGLE_API_KEY=<your_google_api_key> translate-dir translate file <file_path> <target_language>
 ```
 
 Example:
 ```
-GOOGLE_API_KEY=my_super_google_key translate-dir project translate file analysis_notes/main.tex english
+GOOGLE_API_KEY=my_super_google_key translate-dir translate file analysis_notes/main.tex english
 ```
 
 8. Translate all the files into particular language:
 ```
-GOOGLE_API_KEY=<your_google_api_key> translate-dir project translate all <target_language>
+GOOGLE_API_KEY=<your_google_api_key> translate-dir translate all <target_language>
 ```
 
 Example:
 ```
-GOOGLE_API_KEY=my_super_google_key translate-dir project translate all english 
+GOOGLE_API_KEY=my_super_google_key translate-dir translate all english 
 ```
 ##### Vocabulary
 To each translation command a `--vocabulary` flag can be passed. That flag
@@ -168,7 +176,7 @@ eigen vector, vecteur propre, айген вектор
 
 Then, in order to use it in the translation from French to English:
 ```
-GOOGLE_API_KEY=my_super_google_key translate-dir project translate all english --vocabulary vocab.csv
+GOOGLE_API_KEY=my_super_google_key translate-dir translate all english --vocabulary vocab.csv
 ```
 
 #### Correction
@@ -176,12 +184,12 @@ GOOGLE_API_KEY=my_super_google_key translate-dir project translate all english -
 9. In case you corrected the translation done by this tool, in order to save those translations use:
     1. To correct one particular file
     ```
-    translate-dir project correct <file_path>
+    translate-dir correct <file_path>
     ```
 
     2. To correct all the target language directory
     ```
-    translate-dir project correct <language>
+    translate-dir correct <language>
     ```
 
 ## Getting started for developers
