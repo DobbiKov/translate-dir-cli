@@ -9,6 +9,10 @@ documents written using Markup languages such as:
 
 This CLI tool is an implementation of [this library](https://github.com/DobbiKov/translate-dir-lib).
 
+
+**Important**
+> This tool is still in an early phase of development, it may have bugs and unimplemented features
+
 ## Table of Contents
 - [Features](#features)
 - [Citation](#citation)
@@ -78,16 +82,23 @@ the tool operates with files and how the overall structure of the project look
 like.
 
 #### Setup the translation project
-1. Create a dedicated directory to serve as the root for your translation project, and place your existing writing project's directory inside it. In other words, your root directory (for the translation project) must be a parent direcotry for your writing project.
+1. Create a dedicated directory to serve as the root for your translation
+   project, and place your existing writing project's directory inside it. In
+   other words, your root directory (for the translation project) must be a
+   parent directory for your writing project.
+
 2. Create the dedicated translation project:
 ```
-translate-dir init
+translate-dir init [--name <your_name>]
 ```
-In order to set the project's name, use `--name` flag, example:
+where `--name` is an optional parameter that sets your project's name.
+
+Example:
 ```
 translate-dir init --name my_proj
 ```
-3. Set the source directory (that will be translated) if such exists, if it doesn't, create one or move one:
+
+3. Set the source directory (that will be translated) if such exists, if it doesn't, create one or move one inside of your translation project's directoy:
 ```
 translate-dir set-source <dir_name> <language>
 ```
@@ -126,7 +137,7 @@ Example:
 translate-dir add analysis_notes/main.tex
 ```
 
-To see all the translatable files use: `translate-dir list-translatable`
+To see all the translatable files use: `translate-dir list`
 
 6. Synchronize the source directory and target language directories (untranslatable files only)
 ```
