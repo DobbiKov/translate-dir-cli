@@ -146,8 +146,21 @@ translate-dir sync
 
 Why and how does it work? Visit the [profound explanation](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md)
 
-For the translation you need to have a `GOOGLE_API_KEY`, that you can obtain by following [this link](https://aistudio.google.com/app/apikey) the key must be set as a environment variable.
-This can be done by providing it in the start of your CLI command as it is shown below:
+For the translation you need to have a `GOOGLE_API_KEY`. Follow the next instruction to obtain the key:
+1. Visit [this link](https://aistudio.google.com/app/apikey)
+2. 
+    - If it is your first time getting an API KEY for Gemini:
+        1. If it is your first time getting an API KEY for Gemini, then you'll see a Popup window. Click on `Get API Key`, then accept the Terms of Service.
+        2. Click on `Create API Key`
+        3. Copy the generated API key in the popup window
+    - If you already had your API KEY
+        1. Click on `Create API Key`
+        2. Create a new project or choose an existing one
+        3. Click on `Create API KEY in existing project`
+        4. Copy the generated API key in the popup window
+
+This key must be set as a environment variable. This can be done by providing
+it in the start of your CLI command as it is shown below:
 
 7. Translate one particular file:
 ```
