@@ -86,7 +86,7 @@ def add_language(
         typer.secho(f"Error adding language: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
-@app.command("remove-lang")
+@app.command("remove-target")
 def remove_language(
     ctx: typer.Context,
     lang: Annotated[Language, typer.Argument(help="Target language to remove.", case_sensitive=False)]
