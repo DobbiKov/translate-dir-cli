@@ -20,7 +20,7 @@ This CLI tool is an implementation of [this library](https://github.com/DobbiKov
     - [Installation](#installation)
     - [First steps](#first-steps)
         - [Project Setup](#project-setup)
-        - [Sync & Translate](#sync-&-translate)
+        - [Sync & Translate](#sync--translate)
         - [Correction](#correction)
 - [Getting started for developers](#getting-started-for-developers)
 - [Documentation](#documentation)
