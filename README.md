@@ -44,7 +44,7 @@ content rather than wrestling with markup.
 
 ## Citation
 
-If you use this software in your research, please cite it as follows:
+If you use this software in your research or for writing, please cite it as follows:
 ```bib
 @software{korotenko-sci-trans-git,
     author = {Yehor Korotenko},
