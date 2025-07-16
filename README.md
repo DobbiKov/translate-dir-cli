@@ -10,30 +10,37 @@ documents written using Markup languages such as:
 This CLI tool is an implementation of [this library](https://github.com/DobbiKov/translate-dir-lib).
 
 
-**Important**
-> This tool is still in an early phase of development, it may have bugs and unimplemented features
+⚠️ This tool is in early development. Expect bugs and incomplete features.
 
 ## Table of Contents
+- [Why translate-dir?](#why-translate-dir)
 - [Features](#features)
 - [Citation](#citation)
 - [Getting started](#getting-started)
     - [Installation](#installation)
     - [First steps](#first-steps)
-        - [Setup the translation project](#setup-the-translation-project)
-        - [Syncing and Translation](#syncing-and-translation)
+        - [Setup the translation project](#project-setup)
+        - [Syncing and Translation](#sync-&-translate)
         - [Correction](#correction)
 - [Getting started for developers](#getting-started-for-developers)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 
+## Why translate-dir?
+
+Manually translating large projects with scientific notation, Markdown, or
+LaTeX is slow and error-prone. This library automates this process while
+preserving file structure and formatting, so you can focus on refining the
+content rather than wrestling with markup.
+
 ## Features
-- [x] Project creation
-- [x] Source language and the source folder to translate setting
-- [x] Target language addition
-- [x] Project files syncing (between languages)
-- [x] Translation database
-- [x] File translation
-- [x] Translation correction
+- [x] **Project creation** – Set up a new translation workspace in seconds
+- [x] **Source & target language management** – Easily define languages for translation
+- [x] **File syncing** – Synchronize translatable and non-translatable files across languages
+- [x] **Translation database** – Keep track of all translated content and corrections
+- [x] **AI-based translations** – Leverage Google Gemini for high-quality translations
+- [x] **Vocabulary support** – Fine-tune translations with custom glossaries
+- [x] **Correction workflow** – Save manual corrections directly into the database
 
 ## Citation
 
@@ -54,25 +61,28 @@ If you use this software in your research, please cite it as follows:
 For developers: follow [here](#getting-started-for-developers)
 
 ### Installation
+Requirements:
+- python 3.11 +
+- [uv](https://docs.astral.sh/uv/#__tabbed_1_1) (dependency manager)
 1. Ensure you have [uv](https://docs.astral.sh/uv/#__tabbed_1_1) tool installed. 
-2. Clone this repo: 
+2. Clone the repository: 
     ```sh
     git clone https://github.com/DobbiKov/translate-dir-cli
-    ```
-3. Enter to the directory: 
-    ```sh
     cd translate-dir-cli
     ```
-4. Install dependencies: 
+3. Install dependencies: 
     ```sh
     uv sync
     ```
 
-5. Install the CLI globally on your machine: 
+4. Install CLI globally: 
     ```sh
     uv tool install .
     ```
-6. Use it using `translate-dir` (example: `translate-dir --help`)
+5. Run the cli:
+    ```
+    translate-dir --help
+    ```
 
 ### First steps
 This section is a guide to start using this tool as quickly as possible, the profound
@@ -81,72 +91,57 @@ very recommended to read the profound explanation in order to understand how
 the tool operates with files and how the overall structure of the project look
 like.
 
-#### Setup the translation project
-1. Create a dedicated directory to serve as the root for your translation
-   project, and place your existing writing project's directory inside it. In
-   other words, your root directory (for the translation project) must be a
-   parent directory for your writing project.
+#### Project Setup
+1. Create a root directory for your translation project and place your writing project inside it.
 
-2. Create the dedicated translation project:
-```
-translate-dir init [--name <your_name>]
-```
-where `--name` is an optional parameter that sets your project's name.
+2. Initialize the translation project:
+    ```
+    translate-dir init --name <my_project>
+    ```
+3. Set the source directory and its language:
+    ```
+    translate-dir set-source <dir_name> <language>
+    ```
 
-Example:
-```
-translate-dir init --name my_proj
-```
+    Example:
+    ```
+    translate-dir set-source analysis_notes french
+    ```
 
-3. Set the source directory (that will be translated) if such exists, if it doesn't, create one or move one inside of your translation project's directoy:
-```
-translate-dir set-source <dir_name> <language>
-```
+4. Add target language(s):
+    ```
+    translate-dir set-target <language> --tgt-dir [YOUR_TARGET_DIRCTORY]
+    ```
 
-Example:
-```
-translate-dir set-source analysis_notes french
-```
+    Example:
+    ```
+    translate-dir set-target english 
+    ```
 
-4. Add target language(s) that you want to translate your project into:
-```
-translate-dir set-target <language> --tgt-dir [YOUR_TARGET_DIRCTORY]
-```
+    or:
+    ```
+    translate-dir set-target english --tgt-dir translations/en
+    ```
 
-The `--tgt-dir` is an optional flag, if the target directory is not provided,
-then the APP will create a new one.
+#### Sync & Translate
+5. Mark files for translation:
+    ```
+    translate-dir add <path_to_file>
+    ```
 
-Example:
-```
-translate-dir set-target english 
-```
+    Example:
+    ```
+    translate-dir add analysis_notes/main.tex
+    ```
 
-or:
-```
-translate-dir set-target english --tgt-dir translations/en
-```
+    To see all the translatable files use: `translate-dir list`
 
-#### Syncing and Translation 
-5. Mark the files in the source directory that you want to translate:
-```
-translate-dir add <path_to_file>
-```
+6. Sync files between source and target directory:
+    ```
+    translate-dir sync
+    ```
 
-Example:
-```
-translate-dir add analysis_notes/main.tex
-```
-
-To see all the translatable files use: `translate-dir list`
-
-6. Synchronize the source directory and target language directories (untranslatable files only)
-```
-translate-dir sync
-```
-
-Why and how does it work? Visit the [profound explanation](https://github.com/DobbiKov/translate-dir-lib/blob/master/docs/tool-profound-explanation.md)
-
-For the translation you need to have a `GOOGLE_API_KEY`. Follow the next instruction to obtain the key:
+For the translation the `GOOGLE_API_KEY` is required. Follow the next instruction to obtain the key:
 1. Visit [this link](https://aistudio.google.com/app/apikey)
 2. 
     - If it is your first time getting an API KEY for Gemini:
@@ -159,61 +154,74 @@ For the translation you need to have a `GOOGLE_API_KEY`. Follow the next instruc
         3. Click on `Create API KEY in existing project`
         4. Copy the generated API key in the popup window
 
-This key must be set as a environment variable. This can be done by providing
-it in the start of your CLI command as it is shown below:
+This key must be set as an environment variable:
+- On linux/MacOS:
+    ```sh
+    export GOOGLE_API_KEY=<your_key>
+    ```
+- On Windows (cmd):
+    ```sh
+    set GOOGLE_API_KEY=<your_key>    
+    ```
+- On Windows (PowerShell):
+    ```sh
+    $env:GOOGLE_API_KEY="<your_key>"
+    ```
 
-7. Translate one particular file:
-```
-GOOGLE_API_KEY=<your_google_api_key> translate-dir translate file <file_path> <target_language>
-```
 
-Example:
-```
-GOOGLE_API_KEY=my_super_google_key translate-dir translate file analysis_notes/main.tex english
-```
+7. Translate one file:
+    ```
+    translate-dir translate file <file_path> <target_language>
+    ```
 
-8. Translate all the files into particular language:
-```
-GOOGLE_API_KEY=<your_google_api_key> translate-dir translate all <target_language>
-```
+    Example:
+    ```
+    translate-dir translate file analysis_notes/main.tex english
+    ```
 
-Example:
-```
-GOOGLE_API_KEY=my_super_google_key translate-dir translate all english 
-```
+8. Translate all files
+    ```
+    translate-dir translate all <target_language>
+    ```
+
+    Example:
+    ```
+    translate-dir translate all english 
+    ```
+
 ##### Vocabulary
-To each translation command a `--vocabulary` flag can be passed. That flag
-requires a path to a CSV file that contains a translation vocabulary. Such
-file must contain a table where each column is dedicated to one particular
-language, then in the row, there's a term in a language and the other fields
-of the row contain the translation of that term on the language depending the
-column they located in. This vocabulary then is passed to the translation
-tool in order to improve the translation quality.
+You can use the `--vocabulary` flag with any translation command to provide a custom translation vocabulary. This flag expects the path to a CSV file containing your vocabulary.
 
-Example:
-Let's assume you have a file in the project's root directory that is called `vocab.csv` that has such contents:
-```
-English,French,Ukrainian
-iff,ssi,якщо і тільки якщо
-eigen vector, vecteur propre, айген вектор
+The CSV file should be structured as a table where:
+
+* Each column represents a language.
+* Each row lists a term in one language and its translations in the other languages.
+
+For example `vocab.csv`:
+```csv
+English,    French,     German   
+apple,      pomme,      Apfel    
+computer,   ordinateur, Computer 
 ```
 
-Then, in order to use it in the translation from French to English:
+```sh
+translate-dir translate all english --vocabulary vocab.csv
 ```
-GOOGLE_API_KEY=my_super_google_key translate-dir translate all english --vocabulary vocab.csv
-```
+
+This vocabulary helps the translation tool choose more accurate terms and maintain consistency across your project.
+
 
 #### Correction
 
-9. In case you corrected the translation done by this tool, in order to save those translations use:
-    1. To correct one particular file
+9. Save manual correction:
+    1. For a single file:
     ```
-    translate-dir correct <file_path>
+    translate-dir correct file <file_path>
     ```
 
-    2. To correct all the target language directory
+    2. To correct all files in a language:
     ```
-    translate-dir correct <language>
+    translate-dir correct all <language>
     ```
 
 ## Getting started for developers
