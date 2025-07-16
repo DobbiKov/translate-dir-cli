@@ -16,5 +16,5 @@ translate-dir = "cli:app"
 py-modules = ["cli"]
 
 [tool.uv.sources]
-# translate-dir-lib = { git = "https://github.com/DobbiKov/translate-dir-lib" } # for simple usage
-translate-dir-lib = { path = "../translate-dir-lib", editable = true } # for development
+translate-dir-lib = { git = "https://github.com/DobbiKov/translate-dir-lib" } # for simple usage
+# translate-dir-lib = { path = "../translate-dir-lib", editable = true } # for development
