@@ -110,17 +110,12 @@ like.
 
 4. Add target language(s):
     ```
-    translate-dir set-target <language> --tgt-dir [YOUR_TARGET_DIRCTORY]
+    translate-dir set-target <dir_name> <language>
     ```
 
     Example:
     ```
-    translate-dir set-target english 
-    ```
-
-    or:
-    ```
-    translate-dir set-target english --tgt-dir translations/en
+    translate-dir set-target tgt/en english 
     ```
 
 #### Sync & Translate
