@@ -208,15 +208,15 @@ This vocabulary helps the translation tool choose more accurate terms and mainta
 
 #### Correction
 
-9. Save manual correction:
+9. Save manual translation:
     1. For a single file:
     ```
-    translate-dir correct file <file_path>
+    translate-dir update-translation file <file_path>
     ```
 
     2. To correct all files in a language:
     ```
-    translate-dir correct all <language>
+    translate-dir update-translation all <language>
     ```
 
 ## Getting started for developers
