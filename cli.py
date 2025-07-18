@@ -141,6 +141,21 @@ def mark_untranslatable(
         typer.secho(f"Error marking file as untranslatable: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=1)
 
+@app.command("set-llm")
+def set_source_dir(
+    ctx: typer.Context, # For getting loaded project
+    service: Annotated[str, typer.Argument(help="Name of the service providing a model")],
+    model: Annotated[str, typer.Argument(help="Name of the model", case_sensitive=True)] # Typer handles Enum conversion
+):
+    """Sets or changes an LLM and the service providing the model."""
+    project = get_project_from_context(ctx)
+    try:
+        project.set_llm_service_and_model(service, model)
+        typer.secho(f"The service set to '{service}' with the model {model}", fg=typer.colors.GREEN)
+    except errors.SetSourceDirError as e:
+        typer.secho(f"Error setting service and model: {e}", fg=typer.colors.RED, err=True)
+        raise typer.Exit(code=1)
+
 @app.command("list")
 def list_translatable_files(ctx: typer.Context):
     """Lists all files marked as translatable in the source directory."""
