@@ -193,8 +193,11 @@ def info_on_project(ctx: typer.Context):
     else:
         src_dir_name = src_dir.get_path().name
         src_dir_lang = src_dir.get_lang()
+        llm_service = project.get_llm_service()
+        llm_model = project.get_llm_model()
         print("\tSource language: {}".format(src_dir_lang))
         print("\tSource directory: {}".format(src_dir_name))
+        print("\tModel for translation: {} {}".format(llm_service, llm_model))
 
     target_langs = project._get_target_languages()
     if len( target_langs ) == 0:
