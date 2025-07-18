@@ -136,7 +136,9 @@ like.
     translate-dir sync
     ```
 
-For the translation the `GOOGLE_API_KEY` is required. Follow the next instruction to obtain the key:
+For the translation the `LLM_API_KEY` of the service you use is required. 
+
+Follow the next instruction to obtain the key for `gemini` models from `google`:
 1. Visit [this link](https://aistudio.google.com/app/apikey)
 2. 
     - If it is your first time getting an API KEY for Gemini:
@@ -152,15 +154,15 @@ For the translation the `GOOGLE_API_KEY` is required. Follow the next instructio
 This key must be set as an environment variable:
 - On linux/MacOS:
     ```sh
-    export GOOGLE_API_KEY=<your_key>
+    export LLM_API_KEY=<your_key>
     ```
 - On Windows (cmd):
     ```sh
-    set GOOGLE_API_KEY=<your_key>    
+    set LLM_API_KEY=<your_key>    
     ```
 - On Windows (PowerShell):
     ```sh
-    $env:GOOGLE_API_KEY="<your_key>"
+    $env:LLM_API_KEY="<your_key>"
     ```
 
 
