@@ -9,6 +9,10 @@ documents written using Markup languages such as:
 
 This CLI tool is an implementation of [this library](https://github.com/DobbiKov/translate-dir-lib).
 
+Learn more about the project: [main repository](https://github.com/DobbiKov/sci-trans-git).
+
+Extended abstract about the project: [link](https://dobbikov.github.io/sci-trans-git/jdse-paper.pdf)
+
 
 ⚠️ This tool is in early development. Expect bugs and incomplete features.
 
